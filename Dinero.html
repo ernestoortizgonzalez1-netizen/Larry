@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Deuda con Don Ernesto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f1f1f1;
+      text-align: center;
+      padding-top: 80px;
+    }
+    h1 { font-size: 28px; margin-bottom: 30px; }
+    button {
+      font-size: 18px;
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .si { background-color: #4CAF50; color: white; }
+    .no { background-color: #e74c3c; color: white; }
+    .danger { color: #ff4d4d; font-size: 26px; font-weight: bold; animation: blink 1s infinite; }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+    .skull { font-size: 50px; margin-top: 20px; }
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body id="contenido">
+  <h1>¿Le debes a Don Ernesto?</h1>
+  <button class="si" onclick="inicioRespuesta('si')">Sí</button>
+  <button class="no" onclick="inicioRespuesta('no')">No</button>
+
+  <script>
+    function inicioRespuesta(opcion) {
+      if (opcion === "no") {
+        document.body.innerHTML = `
+          <h1 class="danger">MENTIRA</h1>
+          <p>A Don Ernesto no le gustan las mentiras ⚠️</p>
+          <div class="skull">💀💀💀</div>
+          <button class="si" onclick="volverInicio()">Perdón</button>
+        `;
+      } else {
+        document.body.innerHTML = `
+          <h1>Ingresa cuánto le debes a Don Ernesto</h1>
+          <input type="number" id="cantidad" placeholder="Escribe un número">
+          <br>
+          <button class="si" onclick="verificarDeuda()">Enviar</button>
+        `;
+      }
+    }
+
+    function volverInicio() {
+      document.body.innerHTML = `
+        <h1>¿Le debes a Don Ernesto?</h1>
+        <button class="si" onclick="inicioRespuesta('si')">Sí</button>
+        <button class="no" onclick="inicioRespuesta('no')">No</button>
+      `;
+    }
+
+    function verificarDeuda() {
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      if (isNaN(cantidad)) {
+        alert("Por favor ingresa un número válido.");
+        return;
+      }
+      if (cantidad < 100) {
+        document.body.innerHTML = `
+          <h1>😌 Aún no debes tanto</h1>
+          <p>Estás a salvo por ahora...</p>
+        `;
+      } else {
+        // Flujo que ya teníamos: ¿Le vas a pagar?
+        document.body.innerHTML = `
+          <h1>¿Le vas a pagar a Don Ernesto Ortiz González?</h1>
+          <button class="si" onclick="pagoRespuesta('si')">Sí</button>
+          <button class="no" onclick="pagoRespuesta('no')">No</button>
+          <div id="mensaje"></div>
+        `;
+      }
+    }
+
+    function pagoRespuesta(opcion) {
+      const mensaje = document.getElementById("mensaje");
+      if (opcion === "si") {
+        document.body.innerHTML = `
+          <h1>🎉 ¡Excelente! 🎉</h1>
+          <p>Felicitaciones, Don Ernesto está contento con tu decisión.</p>
+          <h2>¿Seguro?</h2>
+          <button class="si" onclick="seguroRespuesta('si')">Sí</button>
+          <button class="no" onclick="seguroRespuesta('no')">No</button>
+          <div id="mensaje2"></div>
+        `;
+      } else {
+        mensaje.innerHTML = `
+          <div class="danger">⚠️ ¡PELIGRO! ⚠️</div>
+          <p>Don Ernesto quiere su dinero. Larry te está buscando...</p>
+          <div class="skull">💀💀💀</div>
+        `;
+      }
+    }
+
+    function seguroRespuesta(opcion) {
+      const mensaje2 = document.getElementById("mensaje2");
+      if (opcion === "si") {
+        mensaje2.innerHTML = `
+          <h1 class="si">🎉 ¡Excelente! 🎉</h1>
+          <p>Dirígete en este momento a pagarle a Don Ernesto... o Larry irá por ti 😉</p>
+        `;
+      } else {
+        document.body.innerHTML = `
+          <h1 class="danger">💀 A Don Ernesto no le gustan las mentiras 💀</h1>
+          <p>Ahora Larry te está siguiendo...</p>
+          <div class="skull">☠️☠️☠️</div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
